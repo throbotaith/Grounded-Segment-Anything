@@ -145,7 +145,11 @@ if __name__ == "__main__":
         "--grounded_checkpoint", type=str, required=True, help="path to checkpoint file"
     )
     parser.add_argument(
-        "--sam_version", type=str, default="vit_h", required=False, help="SAM ViT version: vit_b / vit_l / vit_h"
+        "--sam_version",
+        type=str,
+        default="vit_h",
+        required=False,
+        help="SAM encoder version: vit_b / vit_l / vit_h / dinov3",
     )
     parser.add_argument(
         "--sam_checkpoint", type=str, required=False, help="path to sam checkpoint file"
