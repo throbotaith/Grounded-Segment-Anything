@@ -17,13 +17,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/appuser/Grounded-Segment-Anything
-RUN python -m pip install --no-cache-dir -e segment_anything
-
-# When using build isolation, PyTorch with newer CUDA is installed and can't compile GroundingDINO
-RUN python -m pip install --no-cache-dir wheel
-RUN python -m pip install --no-cache-dir --no-build-isolation -e GroundingDINO
-
-WORKDIR /home/appuser
-RUN pip install --no-cache-dir diffusers[torch]==0.15.1 opencv-python==4.7.0.72 \
-    pycocotools==2.0.6 matplotlib==3.5.3 \
-    onnxruntime==1.14.1 onnx==1.13.1 ipykernel==6.16.2 scipy gradio openai
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -e segment_anything
+RUN pip install --no-cache-dir --no-build-isolation -e GroundingDINO
