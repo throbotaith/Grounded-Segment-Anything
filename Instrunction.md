@@ -27,6 +27,12 @@
    CPUのみの場合は --gpus all を外してください。  
    コンテナ内の作業ディレクトリは /home/appuser/Grounded-Segment-Anything です。
 
+### 注意・トラブルシューティング
+- 依存の固定: コンテナ内で `pip install torch*` などでPyTorch系を上書きしないでください（`requirements.txt` で固定済み）。上書きするとCUDAバージョン不整合が起きます。
+- GPUなし実行: `make run` はホストにGPUが無い場合、自動で `--gpus all` を外します。手動起動例では `--gpus all` を削除してください。
+- GroundingDINOのビルド: コンテナビルド時に `-e GroundingDINO` 済みです。コンテナ内で `python setup.py build develop` は不要です。
+- モデルの破損DL対策: `make run` は `curl -C -` でチェックポイントを再開DLします。壊れた場合は対象 `.pth` を削除して再度 `make run` してください。
+
 ## 主なスクリプトの実行
 
 以下はいずれもコンテナ内で実行します。必要に応じて export CUDA_VISIBLE_DEVICES=0 などで使用GPUを指定します。
@@ -46,7 +52,15 @@
     --box_threshold 0.3 --text_threshold 0.25 \
     --text_prompt "bear" --device cuda
   ```
-
+  ```bash
+  python grounded_sam_demo.py --config GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py \
+    --grounded_checkpoint groundingdino_swint_ogc.pth \
+    --sam_checkpoint sam_vit_h_4b8939.pth \
+    --input_image assets/demo2.jpg \
+    --output_dir outputs \
+    --box_threshold 0.3 --text_threshold 0.25 \
+    --text_prompt "dog" --device cuda
+  ```
 - Grounded-SAM 簡易版  
   ```bash
   python grounded_sam_simple_demo.py
