@@ -3,7 +3,7 @@ diffusers
 gradio
 huggingface_hub
 matplotlib
-numpy
+numpy<2
 onnxruntime
 opencv_python
 Pillow
@@ -11,11 +11,12 @@ pycocotools
 PyYAML
 requests
 setuptools
-supervision
+supervision==0.21.0
 termcolor
 timm
-torch
-torchvision
+torch==1.13.1
+torchvision==0.14.1
+torchaudio==0.13.1
 transformers
 yapf
 nltk
