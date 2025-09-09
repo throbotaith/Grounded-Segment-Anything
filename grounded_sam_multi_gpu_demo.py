@@ -181,7 +181,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser("Grounded-Segment-Anything Demo", add_help=True)
     parser.add_argument("--config", type=str, required=True, help="path to config file")
     parser.add_argument("--grounded_checkpoint", type=str, required=True, help="path to checkpoint file")
-    parser.add_argument("--sam_version", type=str, default="vit_h", required=False, help="SAM ViT version: vit_b / vit_l / vit_h")
+    parser.add_argument(
+        "--sam_version",
+        type=str,
+        default="vit_h",
+        required=False,
+        help="SAM encoder version: vit_b / vit_l / vit_h / dinov3",
+    )
     parser.add_argument("--sam_checkpoint", type=str, required=False, help="path to sam checkpoint file")
     parser.add_argument("--sam_hq_checkpoint", type=str, default=None, help="path to sam-hq checkpoint file")
     parser.add_argument("--use_sam_hq", action="store_true", help="using sam-hq for prediction")

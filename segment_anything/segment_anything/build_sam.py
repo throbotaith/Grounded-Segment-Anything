@@ -17,6 +17,7 @@ def build_sam_vit_h(checkpoint=None):
         encoder_depth=32,
         encoder_num_heads=16,
         encoder_global_attn_indexes=[7, 15, 23, 31],
+        vit_patch_size=16,
         checkpoint=checkpoint,
     )
 
@@ -30,6 +31,7 @@ def build_sam_vit_l(checkpoint=None):
         encoder_depth=24,
         encoder_num_heads=16,
         encoder_global_attn_indexes=[5, 11, 17, 23],
+        vit_patch_size=16,
         checkpoint=checkpoint,
     )
 
@@ -40,6 +42,19 @@ def build_sam_vit_b(checkpoint=None):
         encoder_depth=12,
         encoder_num_heads=12,
         encoder_global_attn_indexes=[2, 5, 8, 11],
+        vit_patch_size=16,
+        checkpoint=checkpoint,
+    )
+
+
+def build_sam_dinov3(checkpoint=None):
+    """Build a SAM model with a DINOv3 image encoder."""
+    return _build_sam(
+        encoder_embed_dim=1024,
+        encoder_depth=24,
+        encoder_num_heads=16,
+        encoder_global_attn_indexes=[5, 11, 17, 23],
+        vit_patch_size=14,
         checkpoint=checkpoint,
     )
 
@@ -49,6 +64,7 @@ sam_model_registry = {
     "vit_h": build_sam,
     "vit_l": build_sam_vit_l,
     "vit_b": build_sam_vit_b,
+    "dinov3": build_sam_dinov3,
 }
 
 
@@ -57,11 +73,11 @@ def _build_sam(
     encoder_depth,
     encoder_num_heads,
     encoder_global_attn_indexes,
+    vit_patch_size,
     checkpoint=None,
 ):
     prompt_embed_dim = 256
     image_size = 1024
-    vit_patch_size = 16
     image_embedding_size = image_size // vit_patch_size
     sam = Sam(
         image_encoder=ImageEncoderViT(

@@ -9,6 +9,7 @@ from .build_sam import (
     build_sam_vit_h,
     build_sam_vit_l,
     build_sam_vit_b,
+    build_sam_dinov3,
     sam_model_registry,
 )
 from .build_sam_hq import (
@@ -16,6 +17,7 @@ from .build_sam_hq import (
     build_sam_hq_vit_h,
     build_sam_hq_vit_l,
     build_sam_hq_vit_b,
+    build_sam_hq_dinov3,
     sam_hq_model_registry,
 )
 from .predictor import SamPredictor
