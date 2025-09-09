@@ -12,10 +12,9 @@ ENV CUDA_HOME /usr/local/cuda-11.6/
 RUN mkdir -p /home/appuser/Grounded-Segment-Anything
 COPY . /home/appuser/Grounded-Segment-Anything/
 
-RUN apt-get update && apt-get install --no-install-recommends wget ffmpeg=7:* \
-    libsm6=2:* libxext6=2:* git=1:* nano=2.* \
-    vim=2:* -y \
-    && apt-get clean && apt-get autoremove && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    wget ffmpeg libsm6 libxext6 git nano vim build-essential \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/appuser/Grounded-Segment-Anything
 RUN python -m pip install --no-cache-dir -e segment_anything
