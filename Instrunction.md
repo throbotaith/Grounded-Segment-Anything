@@ -66,6 +66,23 @@
   python grounded_sam_simple_demo.py
   ```
 
+- Grounded-SAM タイル推論（4K対応）  
+  大きな画像はタイル分割で検出し、NMSで結合後にSAMでマスク化します。  
+  ```bash
+  python grounded_sam_tiled_demo.py \
+    --config GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py \
+    --grounded_checkpoint groundingdino_swint_ogc.pth \
+    --sam_checkpoint sam_vit_h_4b8939.pth \
+    --input_image /path/to/your_4k_image.jpg \
+    --text_prompt "bear" \
+    --output_dir outputs \
+    --device cuda \
+    --tile_size 1408 --tile_overlap 256 --nms_iou 0.5
+  ```
+  メモ:
+  - タイルサイズはGPUメモリに応じて調整（例: 1024〜1536）。
+  - `--sam_version vit_b` にするとメモリ節約（精度とトレードオフ）。
+
 - Grounded-SAM マルチGPU  
   ```bash
   export CUDA_VISIBLE_DEVICES=0,1
